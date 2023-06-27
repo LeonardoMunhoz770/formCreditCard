@@ -29,6 +29,7 @@ import {
   ContainerCVV,
   LineCVV,
   CodeCVV,
+  IconDate,
 } from "./style";
 
 import card from "../../assets/card.png";
@@ -43,6 +44,8 @@ import dinersClub from "../../assets/dinersClub.png";
 import discover from "../../assets/discover.png";
 import code from "../../assets/codeCard.png";
 import cvv from "../../assets/cvv.png";
+import date from "../../assets/date.png";
+import placeholder from "../../assets/placeholder.png";
 
 import { useState } from "react";
 
@@ -64,6 +67,7 @@ const Home = () => {
 
   const handleValues = (event) => {
     event.preventDefault();
+    setBrandCard("");
     setCardNumber("");
     setCardName("");
     setExpiration("");
@@ -90,6 +94,16 @@ const Home = () => {
     setCardNumber(maskedValue);
     validateCreditCard(maskedValue);
   };
+
+  const changeNameCard = (event) => {
+    const regex = /^[a-zA-Z\s]*$/;
+    const { value } = event.target;
+
+    if (regex.test(value) || value === "") {
+      setCardName(value);
+    }
+  };
+
   const changeExpiration = (value) => {
     const formattedValue = value.replace(/\D/g, "").slice(0, 4);
     if (formattedValue.length > 2) {
@@ -126,8 +140,6 @@ const Home = () => {
     }
     // Identificar a bandeira do cartão
     let brand = "Desconhecido";
-    const firstDigit = cleanedNumber.charAt(0);
-    const firstTwoDigits = cleanedNumber.slice(0, 2);
 
     if (/^4\d*$/.test(cleanedNumber)) {
       brand = "Visa";
@@ -159,7 +171,7 @@ const Home = () => {
 
   return (
     <Container>
-      <ContentCard>
+      <ContentCard onSubmit={handleValues}>
         <ContainerCard>
           <DataCard>
             <Card>
@@ -170,6 +182,7 @@ const Home = () => {
                 type="text"
                 value={cardNumber}
                 onChange={changeCardNumber}
+                required
               />
             </Card>
             <Card>
@@ -177,7 +190,8 @@ const Home = () => {
               <InputNameCard
                 placeholder="Nome como está no cartão"
                 value={cardName}
-                onChange={(event) => setCardName(event.target.value)}
+                onChange={changeNameCard}
+                required
               />
             </Card>
 
@@ -189,6 +203,7 @@ const Home = () => {
                   maxLength={5}
                   value={expiration}
                   onChange={handleInputChange}
+                  required
                 />
               </Card>
               <Card>
@@ -200,6 +215,7 @@ const Home = () => {
                   onChange={(event) => setCardCVV(event.target.value)}
                   onFocus={handleCVVFocus}
                   onBlur={handleCVVBlur}
+                  required
                 />
               </Card>
             </ValidCVV>
@@ -219,10 +235,20 @@ const Home = () => {
                 <HeaderCard>
                   <BrandCard src={brandCard} />
                   <IconContactless src={contactless} />
-                  <NumberCard>{cardNumber}</NumberCard>
+                  <NumberCard>
+                    {cardNumber === "" ? (
+                      <IconDate src={placeholder} />
+                    ) : (
+                      cardNumber
+                    )}
+                  </NumberCard>
                   <FooterCard>
-                    <NameCard>{cardName}</NameCard>
-                    <ValidateCard>{expiration}</ValidateCard>
+                    <NameCard>
+                      {cardName === "" ? "Seu nome aqui" : cardName}
+                    </NameCard>
+                    <ValidateCard>
+                      {expiration === "" ? <IconDate src={date} /> : expiration}
+                    </ValidateCard>
                   </FooterCard>
                 </HeaderCard>
                 <ImageCard src={card} />

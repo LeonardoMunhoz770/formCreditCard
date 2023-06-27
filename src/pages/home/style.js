@@ -44,7 +44,7 @@ export const ContainerCard = styled.div`
   }
 `;
 
-export const DataCard = styled.form`
+export const DataCard = styled.div`
   width: 328px;
   height: 265px;
 `;
@@ -154,8 +154,6 @@ export const SecurityData = styled.div`
   gap: 8px;
 `;
 
-export const IconSecurity = styled.img``;
-
 export const LabelSecurity = styled.label`
   color: #e5e7eb;
   @import url("https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap");
@@ -195,8 +193,6 @@ export const HeaderCard = styled.figure`
   align-items: center;
 `;
 
-export const BrandCard = styled.img``;
-
 export const IconContactless = styled.img`
   width: 24px;
   height: 24px;
@@ -230,7 +226,9 @@ export const FooterCard = styled.div`
   height: 16px;
 `;
 
-export const NameCard = styled.label``;
+export const NameCard = styled.label`
+  color: #9ca3af;
+`;
 
 export const ValidateCard = styled.label``;
 
@@ -272,3 +270,9 @@ export const CodeCVV = styled.label`
   font-size: 14px;
   color: #f9fafb;
 `;
+
+export const IconSecurity = styled.img``;
+
+export const BrandCard = styled.img``;
+
+export const IconDate = styled.img``;
